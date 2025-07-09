@@ -58,46 +58,43 @@ Blockly.Python['init_camera_uart'] = function(block) {
   return '';
 };
 
-// Khối lấy thuộc tính của object theo index
-Blockly.Blocks['get_property_by_index'] = {
+// Khối lấy thuộc tính của object theo label
+Blockly.Blocks['get_property_by_label'] = {
   init: function () {
     this.jsonInit({
-      type: "get_property_by_index",
-      message0: "lấy %1 của object thứ %2",
+      type: "get_property_by_label",
+      message0: "lấy %1 của label %2",
       args0: [
         {
           type: "field_dropdown",
           name: "PROPERTY",
           options: [
-            ["nhãn", "label"],
             ["tọa độ x", "x"],
             ["tọa độ y", "y"],
             ["chiều rộng", "w"],
-            ["chiều cao", "h"],
-            ["x trung tâm", "center_x"],
-            ["y trung tâm", "center_y"],
-            ["diện tích", "area"]
+            ["chiều cao", "h"]
           ]
         },
         {
           type: "input_value",
-          name: "INDEX",
-          check: "Number"
+          name: "LABEL",
+          check: "String"
         }
       ],
-      output: ["String", "Number"],
+      output: "Number",
       colour: "#cb2026",
-      tooltip: "Lấy thông tin của object theo chỉ số",
+      tooltip: "Lấy thông tin của object theo nhãn",
       helpUrl: ""
     });
   }
 };
 
-Blockly.Python['get_property_by_index'] = function(block) {
+Blockly.Python['get_property_by_label'] = function(block) {
   var property = block.getFieldValue('PROPERTY');
-  var index = Blockly.Python.valueToCode(block, 'INDEX', Blockly.Python.ORDER_ATOMIC) || '0';
+  var label = Blockly.Python.valueToCode(block, 'LABEL', Blockly.Python.ORDER_ATOMIC) || '""';
   
-  var code = 'cam.get_' + property + '(' + index + ')';
+  // Tạo code để tìm object đầu tiên có label phù hợp và lấy property
+  var code = '(lambda: [cam.get_' + property + '(i) for i in range(cam.get_count()) if cam.get_label(i) == ' + label + '] or [0])()[0]';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
