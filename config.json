@@ -1,0 +1,15 @@
+{
+    "name": "CAMERA-RISC V ",
+    "description": "Mục mở rộng dùng cho camera RISC V",
+    "libs": [
+        "camera_riscv.py"
+    ],
+    "blocks": [
+        "definition.js"
+    ],
+    "toolbox": "toolbox.xml",
+    "languages": {
+        
+    },
+    "poster": "poster.png"
+}
