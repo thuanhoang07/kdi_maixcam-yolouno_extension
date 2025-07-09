@@ -1,6 +1,6 @@
 {
     "name": "CAMERA-RISC V ",
-    "description": "Mục mở rộng dùng cho camera RISC V",
+    "description": "Extension hỗ trợ camera RISC-V với object detection qua UART",
     "libs": [
         "camera_riscv.py"
     ],
