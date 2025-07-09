@@ -1,61 +1,16 @@
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category name="CAMERA-RISC V" colour="#cb2026" icon="camera">
+  <category name="CAMERA-RISC V" colour="#cb2026" icon="camera">\
     <block type="init_camera_uart">
-      <field name="TX">17</field>
-      <field name="RX">16</field>
-      <field name="BAUDRATE">115200</field>
-    </block>
-    
-    <sep gap="10"></sep>
-    
-    <block type="get_data_by_label">
-      <value name="LABEL">
-        <shadow type="text">
-          <field name="TEXT">person</field>
-        </shadow>
-      </value>
-    </block>
-    
-    <block type="has_label">
-      <value name="LABEL">
-        <shadow type="text">
-          <field name="TEXT">person</field>
-        </shadow>
-      </value>
-    </block>
-    
-    <block type="count_label">
-      <value name="LABEL">
-        <shadow type="text">
-          <field name="TEXT">person</field>
-        </shadow>
-      </value>
-    </block>
-    
-    <sep gap="10"></sep>
-    
-    <block type="has_objects"></block>
-    
-    <block type="get_object_count"></block>
-    
-    <block type="get_object_data">
-      <value name="INDEX">
+        <value name="TX_PIN"></value>
+        <value name="RX_PIN"></value>
+        <value name="BAUDRATE">
         <shadow type="math_number">
-          <field name="NUM">0</field>
+          <field name="NUM">115200</field>
         </shadow>
       </value>
     </block>
-    
-    <block type="get_object_center">
-      <value name="INDEX">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-    </block>
-    
     <block type="get_camera_data">
-      <field name="FIELD">0</field>
+        <value name="INDEX"></value>
     </block>
   </category>
 </xml>
