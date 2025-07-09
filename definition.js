@@ -98,31 +98,32 @@ Blockly.Python['get_property_by_label'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-// Khối lấy tọa độ trung tâm của object theo index
-Blockly.Blocks['get_center_by_index'] = {
+// Khối lấy tọa độ trung tâm của object theo label
+Blockly.Blocks['get_center_by_label'] = {
   init: function () {
     this.jsonInit({
-      type: "get_center_by_index",
-      message0: "tọa độ trung tâm của object thứ %1",
+      type: "get_center_by_label",
+      message0: "tọa độ trung tâm của label %1",
       args0: [
         {
           type: "input_value",
-          name: "INDEX",
-          check: "Number"
+          name: "LABEL",
+          check: "String"
         }
       ],
       output: "Array",
       colour: "#cb2026",
-      tooltip: "Trả về tuple (x, y) tọa độ trung tâm của object",
+      tooltip: "Trả về tuple (x, y) tọa độ trung tâm của object theo nhãn",
       helpUrl: ""
     });
   }
 };
 
-Blockly.Python['get_center_by_index'] = function(block) {
-  var index = Blockly.Python.valueToCode(block, 'INDEX', Blockly.Python.ORDER_ATOMIC) || '0';
+Blockly.Python['get_center_by_label'] = function(block) {
+  var label = Blockly.Python.valueToCode(block, 'LABEL', Blockly.Python.ORDER_ATOMIC) || '""';
   
-  var code = 'cam.get_center(' + index + ')';
+  // Tạo code để tìm object đầu tiên có label phù hợp và lấy tọa độ trung tâm
+  var code = '(lambda: [cam.get_center(i) for i in range(cam.get_count()) if cam.get_label(i) == ' + label + '] or [(0, 0)])()[0]';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
