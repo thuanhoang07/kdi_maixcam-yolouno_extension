@@ -103,7 +103,7 @@ cam = CameraUART(tx=D3_PIN, rx=D4_PIN)
 
 async def read_objects():
     while True:
-        await asyncio.sleep_ms(50)
+        await asyncio.sleep_ms(1)
         count = cam.get_count()
         
         if count > 0:
@@ -129,6 +129,7 @@ async def read_objects():
         else:
             # Không có object nào được phát hiện
             print("No objects detected")
+        
 
 async def setup():
     print("App started")

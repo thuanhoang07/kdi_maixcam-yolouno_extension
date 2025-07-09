@@ -1,4 +1,21 @@
-// Khối khởi tạo camera UART
+// Khối lấy số lượng objects
+Blockly.Blocks['get_object_count'] = {
+  init: function () {
+    this.jsonInit({
+      type: "get_object_count",
+      message0: "số lượng objects",
+      output: "Number",
+      colour: "#cb2026",
+      tooltip: "Trả về số lượng objects được phát hiện",
+      helpUrl: ""
+    });
+  }
+};
+
+Blockly.Python['get_object_count'] = function(block) {
+  var code = 'cam.get_count()';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};// Khối khởi tạo camera UART
 Blockly.Blocks['init_camera_uart'] = {
   init: function () {
     this.jsonInit({
@@ -41,73 +58,74 @@ Blockly.Python['init_camera_uart'] = function(block) {
   return '';
 };
 
-// Khối lấy thuộc tính của object theo label
-Blockly.Blocks['get_property_by_label'] = {
+// Khối lấy thuộc tính của object theo index
+Blockly.Blocks['get_property_by_index'] = {
   init: function () {
     this.jsonInit({
-      type: "get_property_by_label",
-      message0: "lấy %1 của %2",
+      type: "get_property_by_index",
+      message0: "lấy %1 của object thứ %2",
       args0: [
         {
           type: "field_dropdown",
           name: "PROPERTY",
           options: [
+            ["nhãn", "label"],
             ["tọa độ x", "x"],
             ["tọa độ y", "y"],
             ["chiều rộng", "w"],
             ["chiều cao", "h"],
-            ["nhãn", "label"]
+            ["x trung tâm", "center_x"],
+            ["y trung tâm", "center_y"],
+            ["diện tích", "area"]
           ]
         },
         {
           type: "input_value",
-          name: "LABEL",
-          check: "String"
+          name: "INDEX",
+          check: "Number"
         }
       ],
       output: ["String", "Number"],
       colour: "#cb2026",
-      tooltip: "Lấy thông tin của object theo nhãn (ví dụ: tọa độ x của person)",
+      tooltip: "Lấy thông tin của object theo chỉ số",
       helpUrl: ""
     });
   }
 };
 
-Blockly.Python['get_property_by_label'] = function(block) {
+Blockly.Python['get_property_by_index'] = function(block) {
   var property = block.getFieldValue('PROPERTY');
-  var label = Blockly.Python.valueToCode(block, 'LABEL', Blockly.Python.ORDER_ATOMIC) || '""';
+  var index = Blockly.Python.valueToCode(block, 'INDEX', Blockly.Python.ORDER_ATOMIC) || '0';
   
-  // Tạo code để tìm object theo label và lấy property
-  var code = '(lambda objs: next((obj.get("' + property + '", 0) for obj in objs if obj.get("label") == ' + label + '), 0))(cam.get_objects())';
+  var code = 'cam.get_' + property + '(' + index + ')';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-// Khối lấy tọa độ trung tâm của object theo label
-Blockly.Blocks['get_center_by_label'] = {
+// Khối lấy tọa độ trung tâm của object theo index
+Blockly.Blocks['get_center_by_index'] = {
   init: function () {
     this.jsonInit({
-      type: "get_center_by_label",
-      message0: "tọa độ trung tâm của %1",
+      type: "get_center_by_index",
+      message0: "tọa độ trung tâm của object thứ %1",
       args0: [
         {
           type: "input_value",
-          name: "LABEL",
-          check: "String"
+          name: "INDEX",
+          check: "Number"
         }
       ],
       output: "Array",
       colour: "#cb2026",
-      tooltip: "Trả về tuple (x, y) tọa độ trung tâm của object theo nhãn",
+      tooltip: "Trả về tuple (x, y) tọa độ trung tâm của object",
       helpUrl: ""
     });
   }
 };
 
-Blockly.Python['get_center_by_label'] = function(block) {
-  var label = Blockly.Python.valueToCode(block, 'LABEL', Blockly.Python.ORDER_ATOMIC) || '""';
+Blockly.Python['get_center_by_index'] = function(block) {
+  var index = Blockly.Python.valueToCode(block, 'INDEX', Blockly.Python.ORDER_ATOMIC) || '0';
   
-  // Tạo code để tìm object theo label và tính tọa độ trung tâm
-  var code = '(lambda objs: next(((obj.get("x", 0) + obj.get("w", 0)//2, obj.get("y", 0) + obj.get("h", 0)//2) for obj in objs if obj.get("label") == ' + label + '), (0, 0)))(cam.get_objects())';
+  var code = 'cam.get_center(' + index + ')';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 

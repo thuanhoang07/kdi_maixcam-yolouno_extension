@@ -3,19 +3,21 @@
     
     <block type="init_camera_uart"></block>
     
-    <block type="get_property_by_label">
-      <field name="PROPERTY">x</field>
-      <value name="LABEL">
-        <shadow type="text">
-          <field name="TEXT">person</field>
+    <block type="get_object_count"></block>
+    
+    <block type="get_property_by_index">
+      <field name="PROPERTY">label</field>
+      <value name="INDEX">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
         </shadow>
       </value>
     </block>
     
-    <block type="get_center_by_label">
-      <value name="LABEL">
-        <shadow type="text">
-          <field name="TEXT">person</field>
+    <block type="get_center_by_index">
+      <value name="INDEX">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
         </shadow>
       </value>
     </block>
