@@ -1,22 +1,3 @@
-// Khối lấy số lượng objects
-Blockly.Blocks['get_object_count'] = {
-  init: function () {
-    this.jsonInit({
-      type: "get_object_count",
-      message0: "số lượng objects",
-      output: "Number",
-      colour: "#cb2026",
-      tooltip: "Trả về số lượng objects được phát hiện",
-      helpUrl: ""
-    });
-  }
-};
-
-Blockly.Python['get_object_count'] = function(block) {
-  var code = 'cam.get_count()';
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
 // Khối khởi tạo camera UART
 Blockly.Blocks['init_camera_uart'] = {
   init: function () {
@@ -118,32 +99,5 @@ Blockly.Blocks['get_all_objects'] = {
 
 Blockly.Python['get_all_objects'] = function(block) {
   var code = 'cam.get_objects()';
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-// Khối lấy object theo index
-Blockly.Blocks['get_object_at_index'] = {
-  init: function () {
-    this.jsonInit({
-      type: "get_object_at_index",
-      message0: "object thứ %1",
-      args0: [
-        {
-          type: "input_value",
-          name: "INDEX",
-          check: "Number"
-        }
-      ],
-      output: "Object",
-      colour: "#cb2026",
-      tooltip: "Trả về dictionary chứa thông tin object (label, x, y, w, h)",
-      helpUrl: ""
-    });
-  }
-};
-
-Blockly.Python['get_object_at_index'] = function(block) {
-  var index = Blockly.Python.valueToCode(block, 'INDEX', Blockly.Python.ORDER_ATOMIC) || '0';
-  var code = 'cam.get_object(' + index + ')';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };

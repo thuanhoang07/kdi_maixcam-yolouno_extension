@@ -3,7 +3,6 @@
     
     <block type="init_camera_uart"></block>
     
-    <block type="get_object_count"></block>
     
     <block type="get_property_by_label">
       <field name="PROPERTY">center_x</field>
@@ -15,14 +14,6 @@
     </block>
     
     <block type="get_all_objects"></block>
-    
-    <block type="get_object_at_index">
-      <value name="INDEX">
-        <shadow type="math_number">
-          <field name="NUM">0</field>
-        </shadow>
-      </value>
-    </block>
     
   </category>
 </xml>
