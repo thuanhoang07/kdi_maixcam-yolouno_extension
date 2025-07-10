@@ -3,7 +3,7 @@ Blockly.Blocks['init_camera_uart'] = {
   init: function () {
     this.jsonInit({
       type: "init_camera_uart",
-      message0: "Khởi tạo kết nối UART với Maixcam TX %1 RX %2", // BAUDRATE %3"
+      message0: "Khởi tạo kết nối UART với Maixcam TX %1 RX %2",
       args0: [
         {
           type: "field_dropdown",
@@ -14,17 +14,12 @@ Blockly.Blocks['init_camera_uart'] = {
           type: "field_dropdown",
           name: "RX",
           options: digitalPins
-        },
-        {
-          type: "field_number",
-          name: "BAUDRATE",
-          value: 115200
         }
       ],
       previousStatement: null,
       nextStatement: null,
       colour: "#cb2026",
-      tooltip: "Khởi tạo kết nối camera qua UART (kích thước màn hình tự động từ model)",
+      tooltip: "Khởi tạo kết nối camera qua UART (baudrate mặc định: 115200)",
       helpUrl: ""
     });
   }
@@ -33,10 +28,9 @@ Blockly.Blocks['init_camera_uart'] = {
 Blockly.Python['init_camera_uart'] = function(block) {
   var tx = block.getFieldValue('TX');
   var rx = block.getFieldValue('RX');
-  var baudrate = block.getFieldValue('BAUDRATE');
   
   Blockly.Python.definitions_['import_riscv_camera'] = 'from camera_riscv import *';
-  Blockly.Python.definitions_['create_riscv_camera'] = 'cam = CameraUART(tx=' + tx + '_PIN, rx=' + rx + '_PIN, baudrate=' + baudrate + ')';
+  Blockly.Python.definitions_['create_riscv_camera'] = 'cam = CameraUART(tx=' + tx + '_PIN, rx=' + rx + '_PIN, baudrate=115200)';
   
   return '';
 };
