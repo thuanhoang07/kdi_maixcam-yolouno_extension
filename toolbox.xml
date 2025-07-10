@@ -1,0 +1,21 @@
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <category name="CAMERA RISC-V" colour="#cb2026" icon="camera">
+    
+    <block type="init_camera_uart"></block>
+    
+    
+    <block type="get_property_by_label">
+      <field name="PROPERTY">center_x</field>
+      <value name="LABEL">
+        <shadow type="text">
+          <field name="TEXT">person</field>
+        </shadow>
+      </value>
+    </block>
+    
+    <!-- <block type="get_all_objects"></block> -->
+    
+    <block type="print_model_labels"></block>
+    
+  </category>
+</xml>

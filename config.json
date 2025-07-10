@@ -1,0 +1,15 @@
+{
+    "name": "CAMERA-RISC V ",
+    "description": "Extension hỗ trợ camera RISC-V với object detection qua UART",
+    "libs": [
+        "camera_riscv.py"
+    ],
+    "blocks": [
+        "definition.js"
+    ],
+    "toolbox": "toolbox.xml",
+    "languages": {
+        
+    },
+    "poster": "poster.png"
+}
