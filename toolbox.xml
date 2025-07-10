@@ -6,15 +6,7 @@
     <block type="get_object_count"></block>
     
     <block type="get_property_by_label">
-      <field name="PROPERTY">x</field>
-      <value name="LABEL">
-        <shadow type="text">
-          <field name="TEXT">person</field>
-        </shadow>
-      </value>
-    </block>
-    
-    <block type="get_center_by_label">
+      <field name="PROPERTY">center_x</field>
       <value name="LABEL">
         <shadow type="text">
           <field name="TEXT">person</field>

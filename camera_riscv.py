@@ -96,62 +96,25 @@ class CameraUART:
 
 """
 from camera_riscv import *
-import asyncio
 
-# Khởi tạo UART tương ứng
-cam = CameraUART(tx=D3_PIN, rx=D4_PIN)
+cam = CameraUART(tx=D3_PIN, rx=D4_PIN, baudrate=115200)
 
-async def read_objects():
-    while True:
-        await asyncio.sleep_ms(50)
-        count = cam.get_count()
-        
-        if count > 0:
-            print(f"Detected {count} objects:")
-            
-            # Duyệt qua từng object bằng index
-            for i in range(count):
-                label = cam.get_label(i)
-                x = cam.get_x(i)
-                y = cam.get_y(i)
-                w = cam.get_w(i)
-                h = cam.get_h(i)
-                # Hiển thị thông tin (bỏ tracked vì không có trong thư viện)
-                print(f" - {label}: x={x}, y={y}, w={w}, h={h}")
-                
-                # Có thể thêm logic xử lý cho từng object ở đây
-                # Ví dụ: điều khiển servo theo vị trí object
-                if label == "person":
-                    center_x = cam.get_center_x(i)
-                    center_y = cam.get_center_y(i)
-                    print(f"   Person center: ({center_x}, {center_y})")
-                
-        else:
-            # Không có object nào được phát hiện
-            print("No objects detected")
+async def task_t_F_U_N():
+  while True:
+    await asleep_ms(10)
+    print('x' + ': ' + str((str(cam.get_objects()) + '')))
 
 async def setup():
-    print("App started")
-    print("Listening for camera data...")
-    
-    # Tạo task để đọc dữ liệu camera
-    asyncio.create_task(read_objects())
+
+  print('App started')
+
+  create_task(task_t_F_U_N())
 
 async def main():
-    await setup()
-    
-    # Main loop - có thể thêm logic khác ở đây
-    while True:
-        await asyncio.sleep_ms(100)
-        # Thêm các task khác nếu cần
-        pass
+  await setup()
+  while True:
+    await asleep_ms(100)
 
-# Chạy chương trình
-try:
-    asyncio.run(main())
-except KeyboardInterrupt:
-    print("Program stopped")
-except Exception as e:
-    print(f"Error: {e}")
+run_loop(main())
 
 """

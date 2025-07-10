@@ -15,7 +15,9 @@ Blockly.Blocks['get_object_count'] = {
 Blockly.Python['get_object_count'] = function(block) {
   var code = 'cam.get_count()';
   return [code, Blockly.Python.ORDER_ATOMIC];
-};// Khối khởi tạo camera UART
+};
+
+// Khối khởi tạo camera UART
 Blockly.Blocks['init_camera_uart'] = {
   init: function () {
     this.jsonInit({
@@ -58,7 +60,7 @@ Blockly.Python['init_camera_uart'] = function(block) {
   return '';
 };
 
-// Khối lấy thuộc tính của object theo label
+// Khối lấy thuộc tính của object theo label (ĐÃ CẬP NHẬT)
 Blockly.Blocks['get_property_by_label'] = {
   init: function () {
     this.jsonInit({
@@ -69,8 +71,8 @@ Blockly.Blocks['get_property_by_label'] = {
           type: "field_dropdown",
           name: "PROPERTY",
           options: [
-            ["tọa độ x", "x"],
-            ["tọa độ y", "y"],
+            ["x trung tâm", "center_x"],
+            ["y trung tâm", "center_y"],
             ["chiều rộng", "w"],
             ["chiều cao", "h"]
           ]
@@ -98,34 +100,7 @@ Blockly.Python['get_property_by_label'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-// Khối lấy tọa độ trung tâm của object theo label
-Blockly.Blocks['get_center_by_label'] = {
-  init: function () {
-    this.jsonInit({
-      type: "get_center_by_label",
-      message0: "tọa độ trung tâm của label %1",
-      args0: [
-        {
-          type: "input_value",
-          name: "LABEL",
-          check: "String"
-        }
-      ],
-      output: "Array",
-      colour: "#cb2026",
-      tooltip: "Trả về tuple (x, y) tọa độ trung tâm của object theo nhãn",
-      helpUrl: ""
-    });
-  }
-};
-
-Blockly.Python['get_center_by_label'] = function(block) {
-  var label = Blockly.Python.valueToCode(block, 'LABEL', Blockly.Python.ORDER_ATOMIC) || '""';
-  
-  // Tạo code để tìm object đầu tiên có label phù hợp và lấy tọa độ trung tâm
-  var code = '(lambda: [cam.get_center(i) for i in range(cam.get_count()) if cam.get_label(i) == ' + label + '] or [(0, 0)])()[0]';
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
+// ĐÃ BỎ khối get_center_by_label
 
 // Khối lấy danh sách tất cả objects
 Blockly.Blocks['get_all_objects'] = {
