@@ -100,21 +100,22 @@ Blockly.Python['get_all_objects'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-// Khối lấy danh sách nhãn của model
-Blockly.Blocks['get_model_labels'] = {
+// Khối in danh sách nhãn của model
+Blockly.Blocks['print_model_labels'] = {
   init: function () {
     this.jsonInit({
-      type: "get_model_labels",
-      message0: "danh sách nhãn của model",
-      output: "Array",
+      type: "print_model_labels",
+      message0: "in danh sách nhãn của model",
+      previousStatement: null,
+      nextStatement: null,
       colour: "#cb2026",
-      tooltip: "Yêu cầu và trả về danh sách tất cả nhãn mà model có thể nhận diện",
+      tooltip: "Yêu cầu MaixCAM gửi danh sách nhãn và in ra terminal",
       helpUrl: ""
     });
   }
 };
 
-Blockly.Python['get_model_labels'] = function(block) {
-  var code = 'cam.get_model_labels()';
-  return [code, Blockly.Python.ORDER_ATOMIC];
+Blockly.Python['print_model_labels'] = function(block) {
+  var code = 'cam.print_model_labels()\n';
+  return code;
 };

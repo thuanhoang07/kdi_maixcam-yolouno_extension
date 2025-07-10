@@ -87,24 +87,34 @@ class CameraUART:
             return obj.get("w", 0) * obj.get("h", 0)
         return 0
     
-    def get_model_labels(self):
-        """Yêu cầu và trả về danh sách nhãn của model"""
-        # Nếu chưa có labels, gửi request
-        if not self.model_labels:
-            request = json.dumps({"request": "get_labels"})
-            self.uart.write((request + "\n").encode())
-            print("[CameraUART] Requested model labels")
-            
-            # Chờ và đọc response
-            timeout = 2000  # 2 giây timeout
-            start_time = time.ticks_ms()
-            
-            while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
-                self.update()
-                if self.model_labels:
-                    break
-                time.sleep_ms(10)
+    def print_model_labels(self):
+        """Yêu cầu và in danh sách nhãn của model ra terminal"""
+        # Gửi request đến MaixCAM
+        request = json.dumps({"request": "get_labels"})
+        self.uart.write((request + "\n").encode())
+        print("[CameraUART] Requesting model labels...")
         
+        # Chờ và đọc response
+        timeout = 3000  # 3 giây timeout
+        start_time = time.ticks_ms()
+        
+        while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            self.update()
+            if self.model_labels:
+                # In danh sách nhãn ra terminal
+                print("=== MODEL LABELS ===")
+                print(f"Total labels: {len(self.model_labels)}")
+                print("Available labels:")
+                for i, label in enumerate(self.model_labels):
+                    print(f"  {i}: {label}")
+                print("==================")
+                return
+            time.sleep_ms(10)
+        
+        print("[CameraUART] Timeout: No response from MaixCAM")
+
+    def get_model_labels(self):
+        """Trả về danh sách nhãn của model (nếu đã có)"""
         return self.model_labels
 
 
@@ -117,10 +127,8 @@ cam = CameraUART(tx=D3_PIN, rx=D4_PIN, baudrate=115200)
 async def task_t_F_U_N():
   while True:
     await asleep_ms(10)
-    # Ví dụ: lấy danh sách nhãn của model
-    labels = cam.get_model_labels()
-    if labels:
-        print('Model labels:', labels)
+    # Ví dụ: in danh sách nhãn của model (chỉ gọi 1 lần)
+    # cam.print_model_labels()
     
     # Ví dụ: in tọa độ trung tâm đã được MaixCAM tính sẵn
     if cam.get_count() > 0:
