@@ -3,7 +3,7 @@ Blockly.Blocks['init_camera_uart'] = {
   init: function () {
     this.jsonInit({
       type: "init_camera_uart",
-      message0: "khởi tạo camera UART TX %1 RX %2 baudrate %3",
+      message0: "Khởi tạo kết nối UART với Maixcam TX %1 RX %2", // BAUDRATE %3"
       args0: [
         {
           type: "field_dropdown",
@@ -15,11 +15,11 @@ Blockly.Blocks['init_camera_uart'] = {
           name: "RX",
           options: digitalPins
         },
-        {
-          type: "field_number",
-          name: "BAUDRATE",
-          value: 115200
-        }
+        // {
+        //   type: "field_number",
+        //   name: "BAUDRATE",
+        //   value: 115200
+        // }
       ],
       previousStatement: null,
       nextStatement: null,
@@ -46,7 +46,7 @@ Blockly.Blocks['get_property_by_label'] = {
   init: function () {
     this.jsonInit({
       type: "get_property_by_label",
-      message0: "lấy %1 của label %2",
+      message0: "Lấy %1 của label %2",
       args0: [
         {
           type: "field_dropdown",
@@ -54,8 +54,8 @@ Blockly.Blocks['get_property_by_label'] = {
           options: [
             ["x trung tâm", "center_x"],
             ["y trung tâm", "center_y"],
-            ["chiều rộng", "w"],
-            ["chiều cao", "h"]
+            ["Chiều rộng w", "w"],
+            ["Chiều cao h", "h"]
           ]
         },
         {

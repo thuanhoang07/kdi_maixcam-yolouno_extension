@@ -121,23 +121,18 @@ class CameraUART:
 """
 from camera_riscv import *
 
-# Khởi tạo camera (tọa độ trung tâm được MaixCAM tính sẵn)
 cam = CameraUART(tx=D3_PIN, rx=D4_PIN, baudrate=115200)
 
 async def task_t_F_U_N():
   while True:
     await asleep_ms(10)
-    # Ví dụ: in danh sách nhãn của model (chỉ gọi 1 lần)
-    # cam.print_model_labels()
-    
-    # Ví dụ: in tọa độ trung tâm đã được MaixCAM tính sẵn
-    if cam.get_count() > 0:
-        center_x = cam.get_center_x(0)  # Từ -160 đến +160
-        center_y = cam.get_center_y(0)  # Từ -112 đến +112
-        print(f'Object 0 center: ({center_x}, {center_y})')
+    print('x' + ': ' + str((lambda: [cam.get_w(i) for i in range(cam.get_count()) if cam.get_label(i) == 'person'] or [0])()[0]))
 
 async def setup():
+
   print('App started')
+  print(cam.get_model_labels())
+
   create_task(task_t_F_U_N())
 
 async def main():
@@ -146,4 +141,5 @@ async def main():
     await asleep_ms(100)
 
 run_loop(main())
+
 """

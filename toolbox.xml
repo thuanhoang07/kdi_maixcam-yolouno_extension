@@ -13,7 +13,7 @@
       </value>
     </block>
     
-    <block type="get_all_objects"></block>
+    <!-- <block type="get_all_objects"></block> -->
     
     <block type="print_model_labels"></block>
     
