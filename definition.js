@@ -15,11 +15,11 @@ Blockly.Blocks['init_camera_uart'] = {
           name: "RX",
           options: digitalPins
         },
-        // {
-        //   type: "field_number",
-        //   name: "BAUDRATE",
-        //   value: 115200
-        // }
+        {
+          type: "field_number",
+          name: "BAUDRATE",
+          value: 115200
+        }
       ],
       previousStatement: null,
       nextStatement: null,
@@ -105,7 +105,7 @@ Blockly.Blocks['print_model_labels'] = {
   init: function () {
     this.jsonInit({
       type: "print_model_labels",
-      message0: "in danh sách nhãn của model",
+      message0: "In danh sách nhãn của model AI",
       previousStatement: null,
       nextStatement: null,
       colour: "#cb2026",
