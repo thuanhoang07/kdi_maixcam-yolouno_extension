@@ -115,6 +115,6 @@ Blockly.Blocks['get_model_labels'] = {
 };
 
 Blockly.Python['get_model_labels'] = function(block) {
-  var code = 'cam.request_model_labels(); cam.get_model_labels()';
+  var code = 'cam.get_model_labels()';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };

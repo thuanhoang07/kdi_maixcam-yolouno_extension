@@ -87,24 +87,24 @@ class CameraUART:
             return obj.get("w", 0) * obj.get("h", 0)
         return 0
     
-    def request_model_labels(self):
-        """Gửi yêu cầu lấy danh sách nhãn từ model"""
-        request = json.dumps({"request": "get_labels"})
-        self.uart.write((request + "\n").encode())
-        print("[CameraUART] Requested model labels")
-        
-        # Chờ và đọc response
-        timeout = 1000  # 1 giây timeout
-        start_time = time.ticks_ms()
-        
-        while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
-            self.update()
-            if self.model_labels:
-                break
-            time.sleep_ms(10)
-    
     def get_model_labels(self):
-        """Trả về danh sách nhãn của model"""
+        """Yêu cầu và trả về danh sách nhãn của model"""
+        # Nếu chưa có labels, gửi request
+        if not self.model_labels:
+            request = json.dumps({"request": "get_labels"})
+            self.uart.write((request + "\n").encode())
+            print("[CameraUART] Requested model labels")
+            
+            # Chờ và đọc response
+            timeout = 2000  # 2 giây timeout
+            start_time = time.ticks_ms()
+            
+            while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+                self.update()
+                if self.model_labels:
+                    break
+                time.sleep_ms(10)
+        
         return self.model_labels
 
 
@@ -117,6 +117,11 @@ cam = CameraUART(tx=D3_PIN, rx=D4_PIN, baudrate=115200)
 async def task_t_F_U_N():
   while True:
     await asleep_ms(10)
+    # Ví dụ: lấy danh sách nhãn của model
+    labels = cam.get_model_labels()
+    if labels:
+        print('Model labels:', labels)
+    
     # Ví dụ: in tọa độ trung tâm đã được MaixCAM tính sẵn
     if cam.get_count() > 0:
         center_x = cam.get_center_x(0)  # Từ -160 đến +160
