@@ -15,5 +15,7 @@
     
     <block type="get_all_objects"></block>
     
+    <block type="get_model_labels"></block>
+    
   </category>
 </xml>

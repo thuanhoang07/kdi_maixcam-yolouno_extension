@@ -24,7 +24,7 @@ Blockly.Blocks['init_camera_uart'] = {
       previousStatement: null,
       nextStatement: null,
       colour: "#cb2026",
-      tooltip: "Khởi tạo kết nối camera qua UART",
+      tooltip: "Khởi tạo kết nối camera qua UART (kích thước màn hình tự động từ model)",
       helpUrl: ""
     });
   }
@@ -41,7 +41,7 @@ Blockly.Python['init_camera_uart'] = function(block) {
   return '';
 };
 
-// Khối lấy thuộc tính của object theo label (ĐÃ CẬP NHẬT)
+// Khối lấy thuộc tính của object theo label
 Blockly.Blocks['get_property_by_label'] = {
   init: function () {
     this.jsonInit({
@@ -66,7 +66,7 @@ Blockly.Blocks['get_property_by_label'] = {
       ],
       output: "Number",
       colour: "#cb2026",
-      tooltip: "Lấy thông tin của object theo nhãn",
+      tooltip: "Lấy thông tin của object theo nhãn (tọa độ trung tâm tính từ giữa màn hình)",
       helpUrl: ""
     });
   }
@@ -80,8 +80,6 @@ Blockly.Python['get_property_by_label'] = function(block) {
   var code = '(lambda: [cam.get_' + property + '(i) for i in range(cam.get_count()) if cam.get_label(i) == ' + label + '] or [0])()[0]';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
-
-// ĐÃ BỎ khối get_center_by_label
 
 // Khối lấy danh sách tất cả objects
 Blockly.Blocks['get_all_objects'] = {
@@ -99,5 +97,24 @@ Blockly.Blocks['get_all_objects'] = {
 
 Blockly.Python['get_all_objects'] = function(block) {
   var code = 'cam.get_objects()';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+// Khối lấy danh sách nhãn của model
+Blockly.Blocks['get_model_labels'] = {
+  init: function () {
+    this.jsonInit({
+      type: "get_model_labels",
+      message0: "danh sách nhãn của model",
+      output: "Array",
+      colour: "#cb2026",
+      tooltip: "Yêu cầu và trả về danh sách tất cả nhãn mà model có thể nhận diện",
+      helpUrl: ""
+    });
+  }
+};
+
+Blockly.Python['get_model_labels'] = function(block) {
+  var code = 'cam.request_model_labels(); cam.get_model_labels()';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };

@@ -8,6 +8,7 @@ class CameraUART:
         self.uart.init(parity=None, stop=1, bits=8)
         self.last_objects = []
         self.count = 0
+        self.model_labels = []  # Danh sách nhãn từ model
         time.sleep(0.2)
     
     def update(self):
@@ -18,7 +19,14 @@ class CameraUART:
                 if raw:
                     line = raw.decode().strip()
                     data = json.loads(line)
-                    if "count" in data and "objects" in data:
+                    
+                    # Xử lý response danh sách nhãn
+                    if "labels" in data:
+                        self.model_labels = data["labels"]
+                        print(f"[CameraUART] Received {len(self.model_labels)} labels from model")
+                    
+                    # Xử lý dữ liệu objects bình thường
+                    elif "count" in data and "objects" in data:
                         self.count = data["count"]
                         self.last_objects = data["objects"]
             except Exception as e:
@@ -78,6 +86,26 @@ class CameraUART:
         if obj:
             return obj.get("w", 0) * obj.get("h", 0)
         return 0
+    
+    def request_model_labels(self):
+        """Gửi yêu cầu lấy danh sách nhãn từ model"""
+        request = json.dumps({"request": "get_labels"})
+        self.uart.write((request + "\n").encode())
+        print("[CameraUART] Requested model labels")
+        
+        # Chờ và đọc response
+        timeout = 1000  # 1 giây timeout
+        start_time = time.ticks_ms()
+        
+        while time.ticks_diff(time.ticks_ms(), start_time) < timeout:
+            self.update()
+            if self.model_labels:
+                break
+            time.sleep_ms(10)
+    
+    def get_model_labels(self):
+        """Trả về danh sách nhãn của model"""
+        return self.model_labels
 
 
 """
