@@ -21,14 +21,14 @@ class CameraUART:
                     data = json.loads(line)
                     
                     # Xử lý response danh sách nhãn
-                    if "labels" in data:
-                        self.model_labels = data["labels"]
+                    if "l" in data:
+                        self.model_labels = data["l"]
                         print(f"[CameraUART] Received {len(self.model_labels)} labels from model")
                     
                     # Xử lý dữ liệu objects bình thường
-                    elif "count" in data and "objects" in data:
-                        self.count = data["count"]
-                        self.last_objects = data["objects"]
+                    elif "c" in data and "o" in data:
+                        self.count = data["c"]
+                        self.last_objects = data["o"]
             except Exception as e:
                 print("CameraUART JSON error:", e)
     
@@ -54,17 +54,17 @@ class CameraUART:
     def get_label(self, index):
         """Trả về label của object tại vị trí index"""
         obj = self.get_object(index)
-        return obj.get("label", "") if obj else ""
+        return obj.get("l", "") if obj else ""
     
     def get_center_x(self, index):
         """Trả về tọa độ x trung tâm của object (đã được MaixCAM tính sẵn)"""
         obj = self.get_object(index)
-        return obj.get("center_x", 0) if obj else 0
+        return obj.get("x", 0) if obj else 0
     
     def get_center_y(self, index):
         """Trả về tọa độ y trung tâm của object (đã được MaixCAM tính sẵn)"""
         obj = self.get_object(index)
-        return obj.get("center_y", 0) if obj else 0
+        return obj.get("y", 0) if obj else 0
     
     def get_w(self, index):
         """Trả về chiều rộng của object"""
